@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - Yang's blog</title>
+    {% else %}
+    <title>Welcome to Yang's blog</title>
+    {% endif %}
+  </head>
+  <body>
+        <h1>Hi, {{ user.nickname }}!</h1>
+        {% for post in posts %}
+        <p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p>
+        {% endfor %}
+      </body>
+</html>
