@@ -8,9 +8,12 @@
     {% endif %}
   </head>
   <body>
+        {% extends "base.html" %} #base模板
+        {% block content %}
         <h1>Hi, {{ user.nickname }}!</h1>
         {% for post in posts %}
-        <p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p>
+        <div><p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p></div>
         {% endfor %}
+        {% endblock %}
       </body>
 </html>

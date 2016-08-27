@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - Yang's blog</title>
+        {% else %}
+        <title>Welcome to Yang's blog</title>
+        {% endif %}
+      </head>
+    <body>
+        <div>Yang's blog: <a href="/index">主页</a></div>
+        <hr>
+        {% block content %}
+        {% endblock %}
+      </body>
 </html>
