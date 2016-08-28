@@ -8,11 +8,19 @@
     {% endif %}
   </head>
   <body>
-        {% extends "base.html" %} #base模板
+        {% extends "base.html" %}
+
         {% block content %}
-        <h1>Hi, {{ user.nickname }}!</h1>
+
+        {% if not current_user.is_authenticated() %}
+        <h1>Hi, Guys!</h1>
+        {% else %}
+        <h1>Welcome back, {{ current_user.nickname }}!</h1>
+        {% endif %}
+
         {% for post in posts %}
-        <div><p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p></div>
+            <p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p>
+        </div>
         {% endfor %}
         {% endblock %}
       </body>

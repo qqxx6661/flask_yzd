@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        {% if title %}
-        <title>{{ title }} - Yang's blog</title>
+  <head>
+    {% if title %}
+    <title>{{title}} - microblog</title>
+    {% else %}
+    <title>microblog</title>
+    {% endif %}
+  </head>
+  <body>
+    <div>Microblog:
+        <a href="{{ url_for('index') }}">Home</a>
+        {% if not current_user.is_authenticated() %}
+        | <a href="{{ url_for('login') }}">Log in</a>
+        or <a href="{{ url_for('sign_up') }}">Sign up</a>
         {% else %}
-        <title>Welcome to Yang's blog</title>
+        | <a href="{{ url_for('logout') }}">Logout</a>
         {% endif %}
-      </head>
-    <body>
-        <div>Yang's blog: <a href="/index">主页</a></div>
-        <hr>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
+    </div>
+    <hr />
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
         {% for message in messages %}
-            <li>{{ message }} </li>
+        <li>{{ message }}</li>
         {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
-      </body>
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </body>
+
+  {% block js %}{% endblock %}
 </html>
