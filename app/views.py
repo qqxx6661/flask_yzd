@@ -3,7 +3,7 @@ import datetime
 
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from forms import LoginForm, SignUpForm
+from forms import LoginForm, SignUpForm, AboutMeForm
 
 from models import User, Post, ROLE_USER, ROLE_ADMIN
 from app import app, db, lm
@@ -107,3 +107,19 @@ def sign_up():
     return render_template(
         "sign_up.html",
         form=form)
+
+@app.route('/user/<int:user_id>', methods=["POST", "GET"])
+@login_required
+def users(user_id):
+    form = AboutMeForm()
+    user = User.query.filter(User.id == user_id).first()
+    if not user:
+        flash("The user is not exist.")
+        redirect("/index")
+    blogs = user.posts.all()
+
+    return render_template(
+        "user.html",
+        form=form,
+        user=user,
+        blogs=blogs)

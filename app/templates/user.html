@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% if title %}
+    <title>{{ title }} - Yang's blog</title>
+    {% else %}
+    <title>Welcome to Yang's blog</title>
+    {% endif %}
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block content %}
+<p>Name: {{ user.nickname }}</p>
+<p>Email: {{ user.email }}</p>
+
+<hr>
+{% if blogs | length %}
+    {% for blog in blogs %}
+    <p>{{ blog.body }}</p>
+    <p>{{ blog.timestamp.strftime("%a, %d %b %Y %H:%M:%S") }}</p>
+    <hr />
+    {% endfor %}
+{% else %}
+    <p style="color:blue;">the guy is so lazy.....</p>
+{% endif %}
+{% endblock %}
+</body>
+</html>

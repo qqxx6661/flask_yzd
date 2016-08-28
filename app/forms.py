@@ -17,3 +17,8 @@ class SignUpForm(Form):
     user_email = TextField('user email', validators=[
         Email(), Required(), Length(max=128)])
     submit = SubmitField('Sign up')
+
+class AboutMeForm(Form):
+    describe = TextAreaField('about me', validators=[
+        Required(), Length(max=140)])
+    submit = SubmitField('YES!')
