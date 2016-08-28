@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     {% if title %}
     <title>{{ title }} - Yang's blog</title>
@@ -10,16 +11,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <table>
-      <tr valign="top">
-          <td><h1>User: {{ user.nickname }}</h1></td>
-          <td><h1>User: {{ user.email }}</h1></td>
-      </tr>
-  </table>
-<hr>
-{% for post in posts %}
-    {% include 'post.html' %}
-{% endfor %}
+<form action="{{ url_for("publish", user_id=current_user.id) }}" method="POST" name="publish">
+    {{ form.hidden_tag() }}
+<p>{{ form.body }}</p>
+<p>{{ form.submit }}</p>
+</form>
 {% endblock %}
 </body>
 </html>

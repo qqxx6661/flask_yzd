@@ -12,8 +12,8 @@ class User(db.Model):
     role = db.Column(db.SmallInteger, default=ROLE_USER)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
 
- #   def is_authenticated(self):
-#        return True
+    def is_authenticated(self):
+        return True
 
     def is_active(self):
         return True
