@@ -1,27 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    {% if title %}
-    <title>{{ title }} - Yang's blog</title>
-    {% else %}
-    <title>Welcome to Yang's blog</title>
-    {% endif %}
-  </head>
-  <body>
-        {% extends "base.html" %}
-
-        {% block content %}
-
-        {% if not current_user.is_authenticated() %}
-        <h1>Hi, Guys!</h1>
-        {% else %}
-        <h1>Welcome back, {{ current_user.nickname }}!</h1>
-        {% endif %}
-
-        {% for post in posts %}
-            <p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p>
-        </div>
-        {% endfor %}
-        {% endblock %}
-      </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+{% if not current_user.is_authenticated() %}
+<h1>Hi, Guys!</h1>
+{% else %}
+<h1>Welcome back, {{ current_user.nickname }}!</h1>
+{% endif %}
+{% for post in posts %}
+    <p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p>
+</div>
+{% endfor %}
+{% endblock %}

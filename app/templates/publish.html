@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% if title %}
-    <title>{{ title }} - Yang's blog</title>
-    {% else %}
-    <title>Welcome to Yang's blog</title>
-    {% endif %}
-</head>
-<body>
 {% extends "base.html" %}
-
 {% block content %}
 <form action="{{ url_for("publish", user_id=current_user.id) }}" method="POST" name="publish">
     {{ form.hidden_tag() }}
@@ -17,5 +6,3 @@
 <p>{{ form.submit }}</p>
 </form>
 {% endblock %}
-</body>
-</html>

@@ -1,25 +1,51 @@
-<!DOCTYPE html>
-<head>
-    {% if title %}
-    <title>{{ title }} - Yang's blog</title>
-    {% else %}
-    <title>Welcome to Yang's blog</title>
-    {% endif %}
-</head>
-<body>
 {% extends "base.html" %}
-
 {% block content %}
-  <table>
-      <tr valign="top">
-          <td><h1>User: {{ user.nickname }}</h1></td>
-          <td><h1>User: {{ user.email }}</h1></td>
-      </tr>
-  </table>
-<hr>
-{% for post in posts %}
-    {% include 'post.html' %}
-{% endfor %}
+<p>Name: {{ current_user.nickname }}</p>
+<p>Email: {{ current_user.email }}</p>
+{% if current_user.about_me %}
+<p onclick="about_me()">about me: {{ current_user.about_me }}</p>
+{% else %}
+<p style="color:#4499EE;" onclick="about_me()">about me: I'm a person. ---- this info from the system.</p>
+{% endif %}
+<div id="aboutMe" style="display:none;">
+    <form action="{{ url_for("about_me", user_id=current_user.id) }}" method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.describe }}
+        {{ form.submit }}
+    </form>
+</div>
+<p style="color:#4c4c4c;">last log: {{ current_user.last_seen.strftime("%a, %d %b %Y %H:%M:%S") }}</p>
+<a href="{{ url_for("publish", user_id=current_user.id) }}">Want to publish blogs?</a>
+<hr />
+{% if pagination %}
+    {% for blog in pagination.items %}
+    <p style="color:#ff6600;">{{ blog.body }}</p>
+    <p style="color:#4c4c4c;">{{ blog.timestamp.strftime("%a, %d %b %Y %H:%M:%S") }}</p>
+    <hr />
+    {% endfor %}
+    {% if pagination.has_prev %} {# 分页的前端展示 #}
+    <a href="{{ url_for('users', user_id=current_user.id, page=pagination.prev_num) }}"><< prev</a>
+    {% else %}
+    << None
+    {% endif %} |
+    {% if pagination.has_next %}
+    <a href="{{ url_for('users', user_id=current_user.id, page=pagination.next_num) }}">next >></a>
+    {% else %}
+    None >>
+    {% endif %}
+{% else %}
+    <p style="color:blue;">the guy is so lazy.....</p>
+{% endif %}
 {% endblock %}
-</body>
-</html>
+{% block js %}
+<script>
+function about_me() {
+    target = document.getElementById("aboutMe");
+    if (target.style.display == "block") {
+        target.style.display = "none";
+    } else {
+        target.style.display = "block";
+    }
+}
+</script>
+{% endblock %}
