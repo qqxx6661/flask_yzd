@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-<form action="{{ url_for("publish", user_id=current_user.id) }}" method="POST" name="publish">
-    {{ form.hidden_tag() }}
-<p>{{ form.body }}</p>
-<p>{{ form.submit }}</p>
-</form>
-{% endblock %}
