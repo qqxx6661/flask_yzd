@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>11133213123</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+             <td>ID</td>
+             <td>用户名</td>
+             <td>邮箱</td>
+       </tr>
+    </thead>
+    {% for data in user %}
+    <tbody>
+        <tr>
+            <td>{{ data.user_id }}</td>
+            <td>{{ data.user_name }}</td>
+            <td>{{ data.user_email }}</td>
+       </tr>
+    </tbody>
+    {% endfor %}
+</table>
+</body>
+</html>
