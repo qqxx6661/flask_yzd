@@ -4,6 +4,11 @@ from models import User, Monitor
 
 
 @app.route('/')
+def to_index():
+    return render_template("index.html")
+
+
+@app.route('/index')
 def index():
     return render_template("index.html")
 
