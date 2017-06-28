@@ -3,7 +3,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config.from_object("config")
-# 防止攻击用，具体待学习
 app.config['SECRET_KEY'] = 'rude3knife'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 # 设置这一项是每次请求结束后都会自动提交数据库中的变动
