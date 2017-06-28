@@ -21,5 +21,10 @@ def to_login():
 
 @app.route('/monitor')
 def to_monitor():
-    return render_template('monitor.html', user=user)
+    return render_template('monitor.html')
+
+
+@app.route('/register')
+def to_register():
+    return render_template('register.html')
 
