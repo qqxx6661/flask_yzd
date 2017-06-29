@@ -59,49 +59,28 @@
 						</div> <button type="submit" class="btn btn-default">搜索</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        {% for message in messages %}
                         <li>
-                            <div>Microblog:
-                                <a href="{{ url_for('index') }}">Home</a>
-                                {% if not current_user.is_authenticated %}
-                                | <a href="{{ url_for('login') }}">Log in</a>
-                                or <a href="{{ url_for('sign_up') }}">Sign up</a>
-                                {% else %}
-                                | <a href="{{ url_for('logout') }}">Logout</a>
-                                {% endif %}
-                             </div>
-                            <hr />
-                            {% with messages = get_flashed_messages() %}
-                            {% if messages %}
-                            <ul>
-                                {% for message in messages %}
-                                <li>{{ message }}</li>
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                            {% endwith %}
+                            <a href="{{ url_for('index') }}">{{ message }}</a>
                         </li>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+
+                        {% if not current_user.is_authenticated %}
 						<li>
-							 <a href="/login">登录</a>
-						</li>
-						<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">关于<strong class="caret"></strong></a>
-							<ul class="dropdown-menu">
-								<li>
-									 <a href="#">1</a>
-								</li>
-								<li>
-									 <a href="#">2</a>
-								</li>
-								<li>
-									 <a href="#">3</a>
-								</li>
-								<li class="divider">
-								</li>
-								<li>
-									 <a href="#">4</a>
-								</li>
-							</ul>
-						</li>
+                            <a href="{{ url_for('login') }}">登录</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('sign_up') }}">注册</a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="{{ url_for('logout') }}">登出</a>
+                        </li>
+                            {% endif %}
 					</ul>
 				</div>
 			</nav>
