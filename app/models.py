@@ -46,7 +46,7 @@ class Monitor(db.Model):
     item_price = db.Column(db.String(64), default='')
     user_price = db.Column(db.String(64), nullable=False)
     status = db.Column(db.Boolean, nullable=False)
-    user_id = (db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     mall_id = db.Column(db.Integer, nullable=False)
     note = db.Column(db.String(128), default='')
     add_date = db.Column(db.DateTime)
