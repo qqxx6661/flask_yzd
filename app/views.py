@@ -4,6 +4,7 @@ from models import User, Monitor
 
 
 @app.route('/')
+@app.route('/index')
 def to_index():
     return render_template("index.html")
 
