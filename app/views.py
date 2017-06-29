@@ -1,12 +1,33 @@
-from app import app
-from flask import render_template
-from models import User, Monitor
-
+# -*- coding: utf-8 -*-
+from app import app, db, lm
+from flask import render_template, flash, redirect, session, url_for, request, g
+from flask_login import login_user, logout_user, current_user, login_required
+from models import User, Monitor, ROLE_USER, ROLE_ADMIN
+from forms import LoginForm
+import datetime
 
 @app.route('/')
 @app.route('/index')
-def to_index():
-    return render_template("index.html")
+def index():
+    user = 'Man'
+    posts = [
+        {
+            'author': {'nickname': 'John'},
+
+            'body': 'Beautiful day in Portland!'
+        },
+
+        {
+            'author': {'nickname': 'Susan'},
+
+            'body': 'The Avengers movie was so cool!'
+        }
+    ]
+    return render_template(
+        "index.html",
+        title="Home",
+        user=user,
+        posts=posts)
 
 
 @app.route('/all')
@@ -15,17 +36,46 @@ def show_all():
     return render_template('all.html', user=user)
 
 
-@app.route('/login')
-def to_login():
-    return render_template('login.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # 验证用户是否被验证
+    if current_user.is_authenticated:
+        return redirect('index')
+    # 注册验证
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.login_check(request.form.get('user_name'))
+        if user:
+            login_user(user)
+            user.last_seen = datetime.datetime.now()
+
+            try:
+                db.session.add(user)
+                db.session.commit()
+            except:
+                flash("The Database error!")
+                return redirect('/login')
+
+            flash('Your name: ' + request.form.get('user_name'))
+            flash('remember me? ' + str(request.form.get('remember_me')))
+            return redirect(url_for("users", user_id=current_user.id))
+        else:
+            flash('Login failed, Your name is not exist!')
+            return redirect('/login')
+
+    return render_template("login.html", title="Sign In", form=form)
 
 
 @app.route('/monitor')
 def to_monitor():
-    return render_template('monitor.html')
+    return render_template('monitor.html', title='Monitor')
 
 
 @app.route('/register')
 def to_register():
-    return render_template('register.html')
+    return render_template('register.html', title='Register')
 
+
+@lm.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
