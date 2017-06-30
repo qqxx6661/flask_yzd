@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h2>
+        你好，{{ user.nickname }}
+    </h2>
+    <p>
+        提醒邮箱: {{ user.email }}
+    </p>
+</div>
+<div class="btn-group">
+    <a class="btn btn-default" href="{{ url_for('addmonitoritem', user_id = current_user.id) }}">添加监控商品</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                商品ID
+            </th>
+            <th>
+                商品名称
+            </th>
+            <th>
+                商品价格
+            </th>
+            <th>
+                用户设定价格
+            </th>
+            <th>
+                所属商城
+            </th>
+            <th>
+                备注
+            </th>
+            <th>
+                添加时间
+            </th>
+            <th>
+                监控状态
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in all_item %}
+        <tr class="info">
+            <td>
+                {{ item.item_id }}
+            </td>
+            <td>
+                {{ item.item_name }}
+            </td>
+            <td>
+                {{ item.item_price }}
+            </td>
+            <td>
+                {{ item.user_price }}
+            </td>
+            <td>
+                {{ item.mall_id }}
+            </td>
+            <td>
+                {{ item.note }}
+            </td>
+            <td>
+                {{ item.add_date }}
+            </td>
+            <td>
+                {{ item.status }}
+            </td>
+        </tr>
+     {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

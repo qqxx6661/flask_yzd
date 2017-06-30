@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="jumbotron">
+    <h1>注册</h1>
 <form action="/sign-up" method="POST" name="sign_up">
     {{ form.hidden_tag() }}
-    <p>Nick name: {{ form.user_name }}</p>
+    <p>用户名: {{ form.user_name }}</p>
     {% for error in form.errors.user_name %}
     <p style="color:red;">[-] {{ error }}</p>
     {% endfor %}
@@ -14,4 +16,11 @@
 
     <p>{{ form.submit }}</p>
 </form>
+</div>
+<div class="alert alert-success alert-dismissable">
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4>
+        注意：
+    </h4> 请勿以京东账号或密码注册，本站与京东等商城无关联。</a>
+</div>
 {% endblock %}

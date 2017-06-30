@@ -1,15 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Sign In</h1>
+<div class="jumbotron">
+<h1>登录</h1>
 <form action="/login" method="post" name="login">
    {{ form.hidden_tag() }}
-   <p>Please enter your name: {{ form.user_name }}</p>
-   {% for error in form.errors.user_name %}
-   <p style="color:red;">[-] {{ error }}</p>
-   {% endfor %}
-
-   <p>记住我？ {{ form.remember_me }}</p>
-   <p>{{ form.submit }}</p>
-
+   <div class="form-group">
+       <label>用户名：</label>
+       <p>{{ form.user_name }}</p>
+       {% for error in form.errors.user_name %}
+       <p style="color:red;">[-] {{ error }}</p>
+       {% endfor %}
+    </div>
+    <div>
+       <p>记住账号？ {{ form.remember_me }}</p>
+        <p>
+            {{ form.submit }}
+        </p>
+    </div>
 </form>
+</div>
 {% endblock %}

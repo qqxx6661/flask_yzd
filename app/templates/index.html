@@ -8,16 +8,20 @@
         目前支持京东商城，之后会进行更多支持。
     </p>
     <p>
-         <a class="btn btn-primary btn-large" href="/monitor">进入监控</a>
+        {% if not current_user.is_authenticated %}
+        <a class="btn btn-primary btn-large" href="{{ url_for('login') }}">进入监控</a>
+        {% else %}
+        <a class="btn btn-primary btn-large" href="{{ url_for('users', user_id = current_user.id) }}">进入监控</a>
+        {% endif %}
     </p>
 </div>
 <div class="row clearfix">
     <div class="col-md-4 column">
         <h2>
-            文章1
+            监控步骤1：
         </h2>
         <p>
-            123456
+            注册并登录，添加商品ID和期望价格
         </p>
         <p>
              <a class="btn" href="#">View details »</a>
@@ -25,10 +29,10 @@
     </div>
     <div class="col-md-4 column">
         <h2>
-            文章2
+            监控步骤2：
         </h2>
         <p>
-            123456
+            等待监控商品降价至期望价格
         </p>
         <p>
              <a class="btn" href="#">View details »</a>
@@ -36,10 +40,10 @@
     </div>
     <div class="col-md-4 column">
         <h2>
-            文章2
+            监控步骤3：
         </h2>
         <p>
-            123456
+            系统会第一时间发送降价提醒邮件
         </p>
         <p>
              <a class="btn" href="#">View details »</a>

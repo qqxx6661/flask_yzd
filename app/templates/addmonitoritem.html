@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+<form action="{{url_for('addmonitoritem', user_id=current_user.id) }}" method="POST" name="publish">
+    {{ form.hidden_tag() }}
+    <label>商品ID：</label>
+    <p>{{ form.item_id }}</p>
+    <label>期望价格：</label>
+    <p>{{ form.user_price }}</p>
+    <label>商城名：（暂时输入1代表京东）</label>
+    <p>{{ form.mall_id }}</p>
+    <p>{{ form.submit }}</p>
+</form>
+</div>
+{% endblock %}
