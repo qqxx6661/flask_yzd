@@ -38,6 +38,9 @@
             <th>
                 监控状态
             </th>
+            <th>
+                监控开关
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -66,6 +69,13 @@
             </td>
             <td>
                 {{ item.status }}
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a class="btn btn-default" href="{{ url_for('on_item', item_id = item.id, user_id = current_user.id) }}">开</a>
+                    <a class="btn btn-default" href="{{ url_for('off_item', item_id = item.id, user_id = current_user.id) }}">关</a>
+                    <a class="btn btn-default" href="{{ url_for('delete_item', item_id = item.id, user_id = current_user.id) }}">删除</a>
+                </div>
             </td>
         </tr>
      {% endfor %}

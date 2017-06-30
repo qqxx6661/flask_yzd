@@ -8,11 +8,6 @@ import datetime
 from string import strip
 
 
-@app.route('/monitor')
-def to_monitor():
-    return render_template('monitor.html', title='Monitor')
-
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -142,3 +137,39 @@ def addmonitoritem(user_id):
         return redirect(url_for("users", user_id=user_id))
 
     return render_template("addmonitoritem.html", form=form)
+
+
+@app.route('/deleteitem', methods=["POST", "GET"])
+@login_required
+def delete_item(item_id, user_id):
+    try:
+        db.session.query(Monitor).filter_by(id=item_id).delete()
+        db.session.commit()
+    except:
+        flash("数据库报错请重试")
+        return redirect(url_for("users", user_id=user_id))
+    return redirect(url_for("users", user_id=user_id))
+
+
+@app.route('/onitem', methods=["POST", "GET"])
+@login_required
+def on_item(item_id, user_id):
+    try:
+        db.session.query(Monitor).filter_by(id=item_id).update({"status": True})
+        db.session.commit()
+    except:
+        flash("数据库报错请重试")
+        return redirect(url_for("users", user_id=user_id))
+    return redirect(url_for("users", user_id=user_id))
+
+
+@app.route('/offitem', methods=["POST", "GET"])
+@login_required
+def off_item(item_id, user_id):
+    try:
+        db.session.query(Monitor).filter_by(id=item_id).update({"status": False})
+        db.session.commit()
+    except:
+        flash("数据库报错请重试")
+        return redirect(url_for("users", user_id=user_id))
+    return redirect(url_for("users", user_id=user_id))
