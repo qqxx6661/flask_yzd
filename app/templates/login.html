@@ -10,6 +10,11 @@
        {% for error in form.errors.user_name %}
        <p style="color:red;">[-] {{ error }}</p>
        {% endfor %}
+       <label>密码：</label>
+       <p>{{ form.password }}</p>
+       {% for error in form.errors.password %}
+       <p style="color:red;">[-] {{ error }}</p>
+       {% endfor %}
     </div>
     <div>
        <p>记住账号？ {{ form.remember_me }}</p>

@@ -7,12 +7,14 @@ from wtforms.validators import DataRequired, Email, Length
 class LoginForm(Form):
     user_name = StringField('user name', validators=[DataRequired(), Length(max=15)])
     remember_me = BooleanField('remember me', default=False)
+    password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('登录'.decode('utf-8'))
 
 
 class SignUpForm(Form):
     user_name = StringField('user name', validators=[DataRequired(), Length(max=15)])
     user_email = StringField('user email', validators=[Email(), DataRequired(), Length(max=128)])
+    password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('注册'.decode('utf-8'))
 
 

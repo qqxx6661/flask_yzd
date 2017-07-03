@@ -6,7 +6,7 @@ from models import User, Monitor, ROLE_USER, ROLE_ADMIN
 from forms import LoginForm, SignUpForm, AboutMeForm, AddMonitorItemForm
 import datetime
 from string import strip
-
+import werkzeug.security
 
 @app.route('/')
 @app.route('/index')
@@ -23,6 +23,19 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.login_check(request.form.get('user_name'))
+        user_name = request.form.get('user_name')
+        password = request.form.get('password')
+
+        # 密码验证
+        try:
+            user_forpwd = User.query.filter(User.nickname == user_name).first()
+            print(type(user_forpwd), user_forpwd, user_forpwd.password)
+            if not password == user_forpwd.password:
+                flash('用户名或密码错误')
+                return redirect('/login')
+        except:
+            flash("数据库读取错误，请重试")
+
         if user:
             login_user(user)
             user.last_seen = datetime.datetime.now()
@@ -36,6 +49,7 @@ def login():
 
             # flash(request.form.get('user_name'))
             # flash('remember me? ' + str(request.form.get('remember_me')))
+            flash('登陆成功')
             return redirect(url_for("index", user_id=current_user.id))
         else:
             flash('没有该用户，请注册')
@@ -64,7 +78,7 @@ def sign_up():
     if form.validate_on_submit():
         user_name = request.form.get('user_name')
         user_email = request.form.get('user_email')
-
+        password = request.form.get('password')
         register_check = User.query.filter(db.or_(
             User.nickname == user_name, User.email == user_email)).first()
         if register_check:
@@ -75,6 +89,7 @@ def sign_up():
             user.nickname = user_name
             user.email = user_email
             user.role = ROLE_USER
+            user.password = password
             try:
                 db.session.add(user)
                 db.session.commit()
@@ -82,7 +97,7 @@ def sign_up():
                 flash("数据库报错请重试")
                 return redirect('/sign-up')
 
-            flash("登陆成功")
+            flash("注册成功")
             return redirect('/login')
 
     return render_template("sign_up.html", form=form)
@@ -139,7 +154,7 @@ def addmonitoritem(user_id):
     return render_template("addmonitoritem.html", form=form)
 
 
-@app.route('/deleteitem', methods=["POST", "GET"])
+@app.route('/deleteitem/<int:user_id>/<int:item_id>', methods=["POST", "GET"])
 @login_required
 def delete_item(item_id, user_id):
     try:
@@ -151,7 +166,7 @@ def delete_item(item_id, user_id):
     return redirect(url_for("users", user_id=user_id))
 
 
-@app.route('/onitem', methods=["POST", "GET"])
+@app.route('/onitem/<int:user_id>/<int:item_id>', methods=["POST", "GET"])
 @login_required
 def on_item(item_id, user_id):
     try:
@@ -163,7 +178,7 @@ def on_item(item_id, user_id):
     return redirect(url_for("users", user_id=user_id))
 
 
-@app.route('/offitem', methods=["POST", "GET"])
+@app.route('/offitem/<int:user_id>/<int:item_id>', methods=["POST", "GET"])
 @login_required
 def off_item(item_id, user_id):
     try:
