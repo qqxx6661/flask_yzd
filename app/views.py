@@ -6,7 +6,7 @@ from models import User, Monitor, ROLE_USER, ROLE_ADMIN
 from forms import LoginForm, SignUpForm, AboutMeForm, AddMonitorItemForm
 import datetime
 from string import strip
-import werkzeug.security
+from werkzeug.security import generate_password_hash, check_password_hash
 
 @app.route('/')
 @app.route('/index')
@@ -29,8 +29,9 @@ def login():
         # 密码验证
         try:
             user_forpwd = User.query.filter(User.nickname == user_name).first()
-            print(type(user_forpwd), user_forpwd, user_forpwd.password)
-            if not password == user_forpwd.password:
+            print(type(user_forpwd), user_forpwd.password)
+            print(password)
+            if not check_password_hash(user_forpwd.password, password):
                 flash('用户名或密码错误')
                 return redirect('/login')
         except:
@@ -79,6 +80,7 @@ def sign_up():
         user_name = request.form.get('user_name')
         user_email = request.form.get('user_email')
         password = request.form.get('password')
+        password = generate_password_hash(password)
         register_check = User.query.filter(db.or_(
             User.nickname == user_name, User.email == user_email)).first()
         if register_check:
