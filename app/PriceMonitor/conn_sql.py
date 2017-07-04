@@ -1,20 +1,27 @@
 # -*- coding: utf-8 -*-
-import mysql.connector
+import sqlite3
 from crawl import Crawl
 from send_email import SendEmail
 import time
 import requests
 import json
-import sys   #引用sys模块进来，并不是进行sys的第一次加载
-reload(sys)  #重新加载sys
-sys.setdefaultencoding('utf8')  ##调用setdefaultencoding函数
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+from os import path
+import os
+
 
 class ItemQuery(object):
-    conn = mysql.connector.connect(user='root', password='root', database='pricemonitor')  # static variable
+    local_dir = path.dirname(__file__)
+    local_dir = os.path.dirname(local_dir)
+    local_dir = os.path.dirname(local_dir)
+    conn = sqlite3.connect(os.path.join(local_dir, 'app.db'))
     start_flag = 0  # 记录是否为首轮
+
     def read_itemid(self):
         cursor = self.conn.cursor()
-        cursor.execute('select item_id, user_id, mall_name from monitor where status=1')
+        cursor.execute('select item_id, user_id, mall_id from monitor where status=1')
         items_inner = cursor.fetchall()
         localtime = time.asctime(time.localtime(time.time()))
         print 'Local Time:', localtime
@@ -34,18 +41,18 @@ class ItemQuery(object):
         cursor.close()
         return items_inner
 
-    def crawl_name(self, item_id_inner, proxy_inner, mall_name_inner):
-        if mall_name_inner == 'jd':
+    def crawl_name(self, item_id_inner, proxy_inner, mall_id_inner):
+        if mall_id_inner == '1':  # jd
             crawl = Crawl()
             item_name_inner = crawl.get_name_jd(item_id_inner, proxy_inner)
             return item_name_inner
-        elif mall_name_inner == 'tm':
+        elif mall_id_inner == '2':  # tm
             #crawl = Crawl()
             #item_name_inner = crawl.get_name_tm(item_id_inner, proxy_inner)
             #return item_name_inner
             temp_item_name = '天猫价格抓取正在攻克中，名称暂不显示'
             return temp_item_name
-        elif mall_name_inner == 'tb':
+        elif mall_id_inner == '3':  # tb
             #crawl = Crawl()
             #item_name_inner = crawl.get_name_tb(item_id_inner, proxy_inner)
             #return item_name_inner
@@ -54,18 +61,18 @@ class ItemQuery(object):
         else:
             return '该商品未设定商城名'
 
-    def crawl_price(self, item_id_inner, proxy_inner, mall_name_inner):
-        if mall_name_inner == 'jd':
+    def crawl_price(self, item_id_inner, proxy_inner, mall_id_inner):
+        if mall_id_inner == '1':
             crawl = Crawl()
             item_price_inner = crawl.get_price_jd(item_id_inner, proxy_inner)
             return item_price_inner
-        elif mall_name_inner == 'tm':
+        elif mall_id_inner == '2':
             #crawl = Crawl()
             #item_price_inner = crawl.get_price_tm(item_id_inner, proxy_inner)
             #return item_price_inner
             temp_item_price = '-1'
             return temp_item_price
-        elif mall_name_inner == 'tb':
+        elif mall_id_inner == '3':
             #crawl = Crawl()
             #item_price_inner = crawl.get_price_tb(item_id_inner, proxy_inner)
             #return item_price_inner
@@ -89,7 +96,7 @@ class ItemQuery(object):
             # print 'SQL query: ', sql
             cursor.execute(sql)
             user_price = cursor.fetchone()  # user_price: tuple, user_price[0]: decimal, item_price: unicode
-        except mysql.connector.errors.InternalError:
+        except sqlite3.connector.errors.InternalError:  # 这句暂时不知道怎么写
             note = '拥有重复商品，每个商品只能有一个监控，否则会导致监控失败。'
             sql = 'update monitor set note = \'%s\' where item_id = %s and user_id = %s' % (note, item_id_inner, user_id_inner)
             print 'Have same item id in one user, skip this round.'
@@ -171,10 +178,10 @@ class ItemQuery(object):
                 item_id = str(item[0])
                 # item_id = item_id[1:-2]  # 现在同时获取用户和商品ID后不需要这条了
                 user_id = str(item[1])
-                mall_name = str(item[2])
+                mall_id = str(item[2])
                 while (1):
                     try:
-                        item_name = query.crawl_name(item_id, proxy, mall_name)
+                        item_name = query.crawl_name(item_id, proxy, mall_id)
                         break
                     except requests.exceptions.ReadTimeout:
                         proxy = query.use_proxy()
@@ -208,7 +215,7 @@ class ItemQuery(object):
                         continue
                 while (1):
                     try:
-                        item_price = query.crawl_price(item_id, proxy, mall_name)
+                        item_price = query.crawl_price(item_id, proxy, mall_id)
                         break
                     except requests.exceptions.ReadTimeout:
                         proxy = query.use_proxy()
@@ -247,4 +254,13 @@ class ItemQuery(object):
 if __name__ == '__main__':
     itemquery = ItemQuery()
     itemquery.start_monitor(30)
-
+    '''
+    local_dir = path.dirname(__file__)
+    local_dir = os.path.dirname(local_dir)
+    local_dir = os.path.dirname(local_dir)
+    conn = sqlite3.connect(os.path.join(local_dir, 'app.db'))
+    cursor = conn.cursor()
+    cursor.execute('select item_id, user_id, mall_id from monitor where status=1')
+    items_inner = cursor.fetchall()
+    print items_inner
+    '''
