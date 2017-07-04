@@ -8,6 +8,7 @@ import datetime
 from string import strip
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -35,7 +36,8 @@ def login():
                 flash('用户名或密码错误')
                 return redirect('/login')
         except:
-            flash("数据库读取错误，请重试")
+            flash("该用户疑似不存在密码")
+            return redirect('/login')
 
         if user:
             login_user(user)
@@ -51,13 +53,12 @@ def login():
             # flash(request.form.get('user_name'))
             # flash('remember me? ' + str(request.form.get('remember_me')))
             flash('登陆成功')
-            return redirect(url_for("index", user_id=current_user.id))
+            return redirect(url_for("users", user_id=current_user.id))
         else:
             flash('没有该用户，请注册')
             return redirect('/login')
 
     return render_template("login.html", title="Sign In", form=form)
-
 
 
 @lm.user_loader
@@ -96,7 +97,7 @@ def sign_up():
                 db.session.add(user)
                 db.session.commit()
             except:
-                flash("数据库报错请重试")
+                flash("数据库读取错误，请重试")
                 return redirect('/sign-up')
 
             flash("注册成功")
@@ -147,7 +148,7 @@ def addmonitoritem(user_id):
             db.session.add(item)
             db.session.commit()
         except:
-            flash("数据库报错请重试")
+            flash("数据库写入商品错误，请重试")
             return redirect(url_for("addmonitoritem", user_id=user_id))
 
         flash("添加商品成功")
@@ -163,7 +164,7 @@ def delete_item(item_id, user_id):
         db.session.query(Monitor).filter_by(id=item_id).delete()
         db.session.commit()
     except:
-        flash("数据库报错请重试")
+        flash("数据库读取错误，请重试")
         return redirect(url_for("users", user_id=user_id))
     return redirect(url_for("users", user_id=user_id))
 
@@ -175,7 +176,7 @@ def on_item(item_id, user_id):
         db.session.query(Monitor).filter_by(id=item_id).update({"status": True})
         db.session.commit()
     except:
-        flash("数据库报错请重试")
+        flash("数据库读取错误，请重试")
         return redirect(url_for("users", user_id=user_id))
     return redirect(url_for("users", user_id=user_id))
 
@@ -187,6 +188,6 @@ def off_item(item_id, user_id):
         db.session.query(Monitor).filter_by(id=item_id).update({"status": False})
         db.session.commit()
     except:
-        flash("数据库报错请重试")
+        flash("数据库读取错误，请重试")
         return redirect(url_for("users", user_id=user_id))
     return redirect(url_for("users", user_id=user_id))

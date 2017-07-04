@@ -1,0 +1,18 @@
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.db
+*.txt
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# My configurations:
+app.db
+mailbox.txt
