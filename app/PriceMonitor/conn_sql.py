@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+#encoding: utf-8
 import sqlite3
 from crawl import Crawl
 from send_email import SendEmail
@@ -113,33 +114,47 @@ class ItemQuery(object):
             cursor.close()
             return
         if float(user_price[0]) >= float(item_price_inner):  # 转为float才可以对比，可以改进
-            # try:
-            sql = 'update monitor set status = 0 where item_id = %s and user_id = %s' % (item_id_inner, user_id_inner)
-            cursor.execute(sql)
-            self.conn.commit()
-            sql = 'select user_email from user where user_id = %s' % user_id_inner
-            cursor.execute(sql)
-            user_email = cursor.fetchone()
-            user_email = str(user_email[0])  # linux可用，win会报下面的错误
-            # item_url = 'https://item.jd.com/' + item_id_inner + '.html'  # 邮件网址，怀疑是垃圾邮件原因
-            email_text = '您监控的商品：' + item_name_inner + '，' + '，现在价格为：' + item_price_inner + '，您设定的价格为：' + str(user_price[0]) + '  赶紧抢购吧！'.encode('utf-8')
-            email_text = email_text
-            email_zhuti = '您监控的商品降价了！'
-            sendemail = SendEmail(email_text, 'admin', 'user', email_zhuti, user_email)
-            sendemail.send()
-            print '该商品降价，已发送邮件提醒用户'
-            '''
-            except UnicodeEncodeError as e:
-                sql = 'update monitor set status = 1 where item_id = %s and user_id = %s' % (item_id_inner, user_id_inner)
+            try:
+                sql = 'update monitor set status = 0 where item_id = %s and user_id = %s' % (item_id_inner, user_id_inner)
                 cursor.execute(sql)
                 self.conn.commit()
-                print '发送邮件过程中发生错误，等待下轮重试，正在监控状态继续', e
+                sql = 'select email from user where id = %s' % user_id_inner
+                cursor.execute(sql)
+                user_email = cursor.fetchone()
+                user_email = str(user_email[0])  # linux可用，winFlask版本可用
+                # item_url = 'https://item.jd.com/' + item_id_inner + '.html'  # 邮件网址，怀疑是垃圾邮件原因
+                email_text = '您监控的商品：' + item_name_inner + '，' + '，现在价格为：' + item_price_inner + '，您设定的价格为：' + str(user_price[0]) + '  赶紧抢购吧！'.encode('utf-8')
+                email_text = email_text
+                email_zhuti = '您监控的商品降价了！'
+                sendemail = SendEmail(email_text, 'admin', 'user', email_zhuti, user_email)
+                sendemail.send()
+                print '该商品降价，已发送邮件提醒用户'
+                note = '已成功发送邮件提醒用户'
+                sql = 'update monitor set note = \'%s\' where item_id = %s and user_id = %s' % (
+                note, item_id_inner, user_id_inner)
+                cursor.execute(sql)
+                self.conn.commit()
+            except UnicodeEncodeError as e:
+                sql = 'update monitor set status = 1 where item_id = %s and user_id = %s' % (
+                item_id_inner, user_id_inner)
+                cursor.execute(sql)
+                self.conn.commit()
+                note = '发送邮件错误：加密错误'
+                sql = 'update monitor set note = \'%s\' where item_id = %s and user_id = %s' % (
+                note, item_id_inner, user_id_inner)
+                cursor.execute(sql)
+                self.conn.commit()
+                print '发送邮件过程中发生加密错误，等待下轮重试，正在监控状态继续', e
             except UnicodeDecodeError as e:
                 sql = 'update monitor set status = 1 where item_id = %s and user_id = %s' % (item_id_inner, user_id_inner)
                 cursor.execute(sql)
                 self.conn.commit()
-                print '发送邮件过程中发生错误，等待下轮重试，正在监控状态继续', e
-            '''
+                note = '发送邮件错误：解密错误'
+                sql = 'update monitor set note = \'%s\' where item_id = %s and user_id = %s' % (
+                note, item_id_inner, user_id_inner)
+                cursor.execute(sql)
+                self.conn.commit()
+                print '发送邮件过程中发生解密错误，等待下轮重试，正在监控状态继续', e
         cursor.close()
 
     def use_proxy(self):
@@ -253,7 +268,7 @@ class ItemQuery(object):
 
 if __name__ == '__main__':
     itemquery = ItemQuery()
-    itemquery.start_monitor(30)
+    itemquery.start_monitor(5)
     '''
     local_dir = path.dirname(__file__)
     local_dir = os.path.dirname(local_dir)
