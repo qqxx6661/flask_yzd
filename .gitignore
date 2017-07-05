@@ -3,7 +3,6 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 *.db
-*.txt
 
 # Python:
 *.py[cod]
@@ -16,3 +15,5 @@ build
 # My configurations:
 app.db
 mailbox.txt
+.idea/workspace.xml
+
