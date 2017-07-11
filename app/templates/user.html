@@ -45,7 +45,11 @@
     </thead>
     <tbody>
         {% for item in all_item %}
+        {% if not item.status %}
+        <tr class="danger">
+        {% else %}
         <tr class="info">
+        {% endif %}
             <td>
                 {{ item.item_id }}
             </td>
@@ -59,7 +63,11 @@
                 {{ item.user_price }}
             </td>
             <td>
-                {{ item.mall_id }}
+                {% if item.mall_id == 1 %}
+                JD商城
+                {% else %}
+                TM商城
+                {% endif %}
             </td>
             <td width="100">
                 {{ item.note }}
@@ -68,7 +76,11 @@
                 {{ item.add_date }}
             </td>
             <td>
-                {{ item.status }}
+                {% if item.status == True %}
+                正在监控
+                {% else %}
+                停止监控
+                {% endif %}
             </td>
             <td>
                 <div class="btn-group">
@@ -81,4 +93,17 @@
      {% endfor %}
     </tbody>
 </table>
+<div class="alert alert-success alert-dismissable">
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4>
+        小贴士：
+    </h4> 一旦商品价格低于预期价格，您便会收到一封提醒邮件。</a>
+</div>
+<div class="row clearfix">
+		<div class="col-md-12 column">
+            <br>
+                <br><br><br><br><br>
+            </p>
+        </div>
+</div>
 {% endblock %}

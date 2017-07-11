@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask_wtf import Form
-from wtforms import StringField, BooleanField, PasswordField, TextAreaField, SubmitField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms import StringField, BooleanField, PasswordField, TextAreaField, SubmitField, IntegerField, RadioField
+from wtforms.validators import DataRequired, Email, Length, NumberRange
 
 
 class LoginForm(Form):
@@ -24,7 +24,7 @@ class AboutMeForm(Form):
 
 
 class AddMonitorItemForm(Form):
-    item_id = TextAreaField('item_id', validators=[DataRequired()])
-    user_price = TextAreaField('item_id', validators=[DataRequired()])
-    mall_id = TextAreaField('item_id', validators=[DataRequired()])
+    item_id = IntegerField('item_id', validators=[NumberRange(min=1, max=99999999999, message='请输入正确的数字')])
+    user_price = IntegerField('user_price', validators=[NumberRange(min=1, max=9999999, message='请输入正确的数字')])
+    mall_id = RadioField('mall_id', choices=[('1', '京东')], validators=[DataRequired()])
     submit = SubmitField('添加监控商品'.decode('utf-8'))

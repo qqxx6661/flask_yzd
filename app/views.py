@@ -7,7 +7,7 @@ from forms import LoginForm, SignUpForm, AboutMeForm, AddMonitorItemForm
 import datetime
 from string import strip
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from PriceMonitor import additemcrawl
 
 @app.route('/')
 @app.route('/index')
@@ -31,7 +31,6 @@ def login():
         try:
             user_forpwd = User.query.filter(User.nickname == user_name).first()
             print(type(user_forpwd), user_forpwd.password)
-            print(password)
             if not check_password_hash(user_forpwd.password, password):
                 flash('用户名或密码错误')
                 return redirect('/login')
@@ -127,7 +126,7 @@ def addmonitoritem(user_id):
     if form.validate_on_submit():
         item_id = request.form.get("item_id")
         if not len(strip(item_id)):
-            flash("The content is necessray!")
+            flash("商品ID为必填项")
             return redirect(url_for("addmonitoritem", user_id=user_id))
         user_price = request.form.get("user_price")
         if not len(strip(user_price)):
@@ -143,6 +142,21 @@ def addmonitoritem(user_id):
         item.add_date = datetime.datetime.now()
         item.user_id = user_id
         item.status = True
+        try:
+            item_exist = Monitor.query.filter(Monitor.item_id == item_id).first()
+            print(item_exist)
+            if item_exist is not None:
+                flash("该商品已经在监控列表中")
+                return redirect(url_for("users", user_id=user_id))
+        except:
+            flash("数据库查询商品错误，请重试")
+            return redirect(url_for("addmonitoritem", user_id=user_id))
+
+        item_name, item_price = additemcrawl.additemcrawl(item_id, user_id, mall_id)
+        print(type(item_name), type(item_price))
+        # print(item_name, item_price)
+        item.item_name = item_name
+        item.item_price = item_price
 
         try:
             db.session.add(item)

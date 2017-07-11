@@ -3,11 +3,14 @@ from email.header import Header
 from email.mime.text import MIMEText
 from email.utils import parseaddr, formataddr
 import smtplib
+from os import path
+import os
 
 
 class SendEmail(object):
     # 发送邮箱设置
-    with open('mailbox.txt', 'r') as f:
+    local_dir = path.dirname(__file__)
+    with open(os.path.join(local_dir, 'mailbox.txt'), 'r') as f:
         mail_setting = f.readlines()
     from_addr = mail_setting[0].strip()
     password = mail_setting[1].strip()
@@ -43,5 +46,6 @@ class SendEmail(object):
 if __name__ == '__main__':
     sendemail = SendEmail('111', 'wo', 'ni', 'zhuti', 'yangzd1993@foxmail.com')
     sendemail.send()
+
 
 

@@ -3,13 +3,30 @@
 <div class="jumbotron">
 <form action="{{url_for('addmonitoritem', user_id=current_user.id) }}" method="POST" name="publish">
     {{ form.hidden_tag() }}
-    <label>商品ID：</label>
-    <p>{{ form.item_id }}</p>
-    <label>期望价格：</label>
-    <p>{{ form.user_price }}</p>
-    <label>商城名：（暂时输入1代表京东）</label>
-    <p>{{ form.mall_id }}</p>
-    <p>{{ form.submit }}</p>
+    <div class="form-group">
+        <label>商品ID：</label>
+        <p>{{ form.item_id }}</p>
+        {% for error in form.errors.item_id %}
+        <p style="color:red;">[-] {{ error }}</p>
+        {% endfor %}
+        <label>期望价格：</label>
+        <p>{{ form.user_price }}</p>
+        {% for error in form.errors.user_price %}
+        <p style="color:red;">[-] {{ error }}</p>
+        {% endfor %}
+        <label>商城名：</label>
+        <p>{{ form.mall_id }}</p>
+        {% for error in form.errors.mall_id %}
+        <p style="color:red;">[-] {{ error }}</p>
+        {% endfor %}
+        <p>{{ form.submit }}</p>
+    </div>
 </form>
+</div>
+<div class="alert alert-success alert-dismissable">
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4>
+        注意：
+    </h4> 提交后会进行首次信息获取，为防止恶意添加商品，若输入时商品价格就低于期望价格，不会立即收到邮件。</a>
 </div>
 {% endblock %}
