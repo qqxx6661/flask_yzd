@@ -110,6 +110,8 @@ def sign_up():
 def users(user_id):
     form = AboutMeForm()
     user = User.query.filter(User.id == user_id).first()
+    if user_id is not current_user.id:
+        return redirect(url_for('index'))
     if not user:
         flash("The user is not exist.")
         redirect("/index")
