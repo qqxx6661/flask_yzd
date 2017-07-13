@@ -8,8 +8,10 @@
     <title>Rude3Knife</title>
     {% endif %}
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/dist/css/share.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -110,13 +112,26 @@
 		<ul class="nav nav-tabs nav-tabs-justified">
 			<div class="row" align="center">
 				<div class="col-md-4 col-sm-4 col-xs-4" align="center"><li>本站基于Flask</li></div>
-				<div class="col-md-4 col-sm-4 col-xs-4" align="center"><li>Github: @qqxx6661</li></div>
+				<div class="col-md-4 col-sm-4 col-xs-4" align="center">
+					<li>
+						<div class="social-share" data-sites="weibo,qq,qzone,tencent,google,facebook,twitter"></div>
+					</li>
+				</div>
 				<div class="col-md-4 col-sm-4 col-xs-4" align="center"><li>Email: yangzd1993@gmail.com</a></li></div>
 			</div>
 		</ul>
 	</div>
 	</nav>
 </div>
+
+<script src="http://apps.bdimg.com/libs/jquery/1.8.2/jquery.js"></script>
+<script src="/static/dist/js/jquery.share.min.js"></script>
+<script>
+$('#share-1').share();
+$('#share-2').share({sites: ['qzone', 'qq', 'weibo','wechat']});
+$('#share-3').share();
+$('#share-4').share();
+</script>
 
 </body>
 </html>
