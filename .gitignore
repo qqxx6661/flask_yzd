@@ -9,7 +9,6 @@ Desktop.ini
 *.so
 *.egg
 *.egg-info
-dist
 build
 
 # My configurations:
