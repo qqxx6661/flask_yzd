@@ -8,6 +8,8 @@ import datetime
 from string import strip
 from werkzeug.security import generate_password_hash, check_password_hash
 from PriceMonitor import additemcrawl
+from sqlalchemy import exc
+import sqlite3
 
 @app.route('/')
 @app.route('/index')
@@ -156,6 +158,9 @@ def addmonitoritem(user_id):
 
         item_name, item_price = additemcrawl.additemcrawl(item_id, user_id, mall_id)
         print(type(item_name), type(item_price))
+        if type(item_name) == str:
+            flash("该商品不存在，请输入正确的商品ID")
+            return redirect(url_for("addmonitoritem", user_id=user_id))
         # print(item_name, item_price)
         item.item_name = item_name
         item.item_price = item_price
@@ -164,9 +169,8 @@ def addmonitoritem(user_id):
             db.session.add(item)
             db.session.commit()
         except:
-            flash("数据库写入商品错误，请重试")
+            flash("写入数据库错误")
             return redirect(url_for("addmonitoritem", user_id=user_id))
-
         flash("添加商品成功")
         return redirect(url_for("users", user_id=user_id))
 

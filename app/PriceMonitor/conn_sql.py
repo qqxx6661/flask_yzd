@@ -129,7 +129,7 @@ class ItemQuery(object):
                 sendemail = SendEmail(email_text, 'admin', 'user', email_zhuti, user_email)
                 sendemail.send()
                 print '该商品降价，已发送邮件提醒用户'
-                note = '已成功发送邮件提醒用户'
+                note = '已发送提醒邮件'
                 sql = 'update monitor set note = \'%s\' where item_id = %s and user_id = %s' % (
                 note, item_id_inner, user_id_inner)
                 cursor.execute(sql)
