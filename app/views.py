@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
+import datetime
+from string import strip
 from app import app, db, lm
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
-from models import User, Monitor, ROLE_USER, ROLE_ADMIN
-from forms import LoginForm, SignUpForm, AboutMeForm, AddMonitorItemForm
-import datetime
-from string import strip
 from werkzeug.security import generate_password_hash, check_password_hash
+from models import User, Monitor, ROLE_USER
+from forms import LoginForm, SignUpForm, AboutMeForm, AddMonitorItemForm
 from PriceMonitor import additemcrawl
-from sqlalchemy import exc
-import sqlite3
+
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("index.html", title="Home")
+    try:
+        item_number = Monitor.query.count()
+        user_number = User.query.count()
+    except:
+        return render_template("index.html", title="Home")
+    return render_template("index.html", title="Home", item_number=item_number, user_number=user_number)
 
 
 @app.route('/login', methods=['GET', 'POST'])
