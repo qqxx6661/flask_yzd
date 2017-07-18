@@ -1,29 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="jumbotron">
-<h1>登录</h1>
-<form action="/login" method="post" name="login">
-   {{ form.hidden_tag() }}
-   <div class="form-group">
-       <label>用户名：</label>
-       <p>{{ form.user_name }}</p>
-       {% for error in form.errors.user_name %}
-       <p style="color:red;">[-] {{ error }}</p>
-       {% endfor %}
-       <label>密码：</label>
-       <p>{{ form.password }}</p>
-       {% for error in form.errors.password %}
-       <p style="color:red;">[-] {{ error }}</p>
-       {% endfor %}
-    </div>
-    <div>
-       <p>记住账号？ {{ form.remember_me }}</p>
-        <p>
-            {{ form.submit }}
-        </p>
-    </div>
-</form>
+    <h2>登录</h2>
+    <form action="/login" method="post" name="login" role="form">
+        {{ form.hidden_tag() }}
+           <label>用户名：</label>
+           <p>{{ form.user_name }}</p>
+           {% for error in form.errors.user_name %}
+           <p style="color:red;">[-] {{ error }}</p>
+           {% endfor %}
+           <label>密码：</label>
+           <p>{{ form.password }}</p>
+           {% for error in form.errors.password %}
+           <p style="color:red;">[-] {{ error }}</p>
+           {% endfor %}
+
+        <div>
+                <!--
+                <label>记住账号：</label>
+                <p>{{ form.remember_me }}</p>
+                -->
+                <p>{{ form.submit }}</p>
+        </div>
+    </form>
 </div>
+
 <div class="alert alert-success alert-dismissable">
      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
     <h4>

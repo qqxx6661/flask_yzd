@@ -73,7 +73,7 @@
                 {{ item.note }}
             </td>
             <td>
-                {{ item.add_date }}
+                {{ item.add_date.strftime("%c") }}
             </td>
             <td>
                 {% if item.status == True %}

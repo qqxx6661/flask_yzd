@@ -11,12 +11,13 @@
     <link rel="stylesheet" href="/static/dist/css/share.min.css">
 	<script src="/static/bootstrap/jquery.min.js"></script>
     <script src="/static/bootstrap/bootstrap.min.js"></script>
-
 </head>
+
 <body>
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
+
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
 					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="/">Rude3Knife小屋</a>
@@ -65,16 +66,17 @@
 						</div> <button type="submit" class="btn btn-default">搜索</button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
+						<!--
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
                         {% for message in messages %}
                         <li>
-							<a href="{{ url_for('index') }}"><font color="red">{{ message.decode('utf-8') }}</font></a>
+							<a><font color="red">{{ message.decode('utf-8') }}</font></a>
                         </li>
                         {% endfor %}
                         {% endif %}
                         {% endwith %}
-
+						-->
                         {% if not current_user.is_authenticated %}
 						<li>
                             <a href="{{ url_for('login') }}">登录</a>
@@ -93,10 +95,20 @@
 					</ul>
 				</div>
 			</nav>
+
+			{% for message in get_flashed_messages() %}
+			<div class="alert alert-warning">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				{{ message }}
+			</div>
+			{% endfor %}
+
 			{% block content %}{% endblock %}
+
         </div>
     </div>
 </div>
+
 
 <div class="main_nav_bottom">
 	<nav class="navbar navbar-default navbar-fixed-bottom">
