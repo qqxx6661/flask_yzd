@@ -5,8 +5,10 @@
     <form action="/sign-up" method="POST" name="sign_up" >
         {{ form.hidden_tag() }}
 
-        <label>用户名：</label>
-        <p>{{ form.user_name }}</p>
+        <label>用户名：（15个字符以内）</label>
+        <p>
+            {{ form.user_name }}
+        </p>
         {% for error in form.errors.user_name %}
         <p style="color:red;">[-] {{ error }}</p>
         {% endfor %}
