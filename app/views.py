@@ -152,7 +152,7 @@ def addmonitoritem(user_id):
         item.status = True
         try:
             item_exist = Monitor.query.filter(Monitor.item_id == item_id).first()
-            print(item_exist)
+            # print(item_exist)
             if item_exist is not None:
                 flash("该商品已经在监控列表中")
                 return redirect(url_for("users", user_id=user_id))
@@ -161,11 +161,11 @@ def addmonitoritem(user_id):
             return redirect(url_for("addmonitoritem", user_id=user_id))
 
         item_name, item_price = additemcrawl.additemcrawl(item_id, user_id, mall_id)
-        print(type(item_name), type(item_price))
+        print(type(item_name), type(item_price), item_name)
         if type(item_name) == str:
             flash("该商品不存在，请输入正确的商品ID")
             return redirect(url_for("addmonitoritem", user_id=user_id))
-        # print(item_name, item_price)
+        
         item.item_name = item_name
         item.item_price = item_price
 
