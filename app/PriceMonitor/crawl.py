@@ -36,19 +36,22 @@ class Crawl(object):
             r = requests.get(url, headers=self.headers, timeout=6)
         selector = etree.HTML(r.text)
         name = selector.xpath("//*[@class='sku-name']/text()")  # list
-        try:
-            name = name[0].strip()
-        except IndexError as e:
-            print e, name
-            print 'Change method to catch name'
+        if len(name) == 2:  # jd jingxuan need this
+            name = name[1].strip()
+        else:
             try:
-                name = selector.xpath("//*[@id='name']/h1/text()")
                 name = name[0].strip()
             except IndexError as e:
                 print e, name
-                print 'Catch name error'
-                name = '本轮抓取该商品名称失败，请等待重试'
-                return name
+                print 'Change method to catch name'
+                try:
+                    name = selector.xpath("//*[@id='name']/h1/text()")
+                    name = name[0].strip()
+                except IndexError as e:
+                    print e, name
+                    print 'Catch name error'
+                    name = '本轮抓取该商品名称失败，请等待重试'
+                    return name
         return name  # 遇到return无需break了！
 
     def get_name_tb(self, item_id_inner, proxy_inner):
@@ -105,3 +108,8 @@ class Crawl(object):
         price = price[0][:-2]  # '699.00' 888.00-999.00需要正则，待修改, 下架商品, 待修改
         # print name[0], price
         return price
+
+if __name__ == '__main__':
+    c = Crawl()
+    item_name = c.get_name_jd('2121097', None)
+    print(item_name)
