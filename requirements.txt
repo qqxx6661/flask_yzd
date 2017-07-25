@@ -23,3 +23,4 @@ urllib3==1.21.1
 uWSGI==2.0.15
 Werkzeug==0.12.2
 WTForms==2.1
+tweepy==3.5.0

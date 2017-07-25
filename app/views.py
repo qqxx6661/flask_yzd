@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models import User, Monitor, ROLE_USER
 from forms import LoginForm, SignUpForm, AboutMeForm, AddMonitorItemForm
 from PriceMonitor import additemcrawl
-
+import tweepy
 
 @app.route('/')
 @app.route('/index')
@@ -17,9 +17,25 @@ def index():
         item_number = Monitor.query.count()
         user_number = User.query.count()
     except:
-        return render_template("index.html", title="Home")
-    return render_template("index.html", title="Home", item_number=item_number, user_number=user_number)
+        return render_template("index.html", title="首页")
+    return render_template("index.html", title="首页", item_number=item_number, user_number=user_number)
 
+@app.route('/about-me')
+def about_me():
+    return render_template("about_me.html", title="关于我")
+
+@app.route('/twitter')
+def twitter():
+    consumer_key = "kIzG8NiFtJJKMtM8j6mjIJASm"
+    consumer_secret = "zz346qvg5beasTDC8GvUvVqYD4B7XruTez63h7OCLUD8wCYyiT"
+    access_token = '851927351831085056-Ennbtyu5E0MIrQcspvYSBuItSZdFX9i'
+    access_token_secret = 'ApSomBKX2FQ4vy2r0AZrXReDVerPbmnDhL2p1KeQptXoO'
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+    twitter_trump = api.user_timeline('realDonaldTrump')
+
+    return render_template("twitter.html", title="推特", twitter_trump=twitter_trump)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<ol>
+				{% for tweet in twitter_trump %}
+				<li>
+					{{ tweet.text }}
+				</li>
+				<br>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+</div>
+{% endblock %}

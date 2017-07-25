@@ -2,10 +2,16 @@
 {% block content %}
 <div class="jumbotron">
     <h2>
-        电商监控系统上线
+        电商价格监控系统
     </h2>
     <p>
-        目前支持京东商城，之后会进行更多支持。
+        目前支持京东商城，低于期望价格后会发送邮件提醒用户。
+    </p>
+    <h3>
+        监控系统状态：
+    </h3>
+    <p>
+        当前监控商品数：{{item_number}} 当前用户数：{{user_number}}
     </p>
     <p>
         {% if not current_user.is_authenticated %}
@@ -15,18 +21,20 @@
         {% endif %}
     </p>
 </div>
+<div class="jumbotron">
+    <h2>
+        推特治国
+    </h2>
+    <p>
+        查看川普最新推特，还可根据用户名或者id查看用户推特
+    </p>
+    <p>
+        <a class="btn btn-primary btn-large" href="{{ url_for('twitter') }}">查看推特</a>
+    </p>
+</div>
 <div class="row clearfix">
     <div class="col-md-4 column">
         <h2>
-            系统状态
-        </h2>
-        <p>
-            当前监控商品数：{{item_number}}<br>
-            当前用户数：{{user_number}}
-        </p>
-    </div>
-    <div class="col-md-4 column">
-        <h2>
 
         </h2>
         <p>
@@ -38,8 +46,15 @@
 
         </h2>
         <p>
-            <div class="github-widget" data-username="qqxx6661"></div>
-            <script src="/static/js/github_user_widget_en.js"></script>
+
+        </p>
+    </div>
+    <div class="col-md-4 column">
+        <h2>
+
+        </h2>
+        <p>
+
         </p>
     </div>
 </div>
