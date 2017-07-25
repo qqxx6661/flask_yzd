@@ -2,15 +2,24 @@
 {% block content %}
 <div class="container">
 	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<ol>
-				{% for tweet in twitter_trump %}
-				<li>
+		<div class="col-md-8 column">
+			{% for tweet in twitter_trump %}
+			<blockquote>
+				<p>
 					{{ tweet.text }}
-				</li>
-				<br>
-				{% endfor %}
-			</ol>
+				</p> <small>{{ tweet.created_at }}</small>
+			</blockquote>
+			{% endfor %}
+		</div>
+		<div class="col-md-4 column">
+			<img alt="140x140" src="http://static1.businessinsider.com/image/566efa6172f2c15b028b56ae-480/donald-trump.jpg" class="img-thumbnail" />
+			<br>
+			<h2>
+				川建国同志推特语录
+			</h2>
+			<h3>
+				实时更新
+			</h3>
 		</div>
 	</div>
 </div>
