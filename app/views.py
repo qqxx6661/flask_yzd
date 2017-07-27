@@ -24,6 +24,10 @@ def index():
 def about_me():
     return render_template("about_me.html", title="关于我")
 
+@app.route('/iot2012')
+def iot2012():
+    return render_template("iot2012.html", title="江大物联网")
+
 @app.route('/twitter')
 def twitter():
     consumer_key = "kIzG8NiFtJJKMtM8j6mjIJASm"
