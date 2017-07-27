@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
+<h2>
+	蹭饭地图
+</h2>
 <div id="map-wrap" style="height: 500px;">
 		<!-- 这里以后是地图 -->
 </div>
@@ -7,44 +10,149 @@
 <script src="/static/js/china.js"></script>
 <script>
 var myChart = echarts.init(document.getElementById('map-wrap'));
-            var option = {
-                tooltip: {
-//                    show: false //不显示提示标签
-                    formatter: '{b}', //提示标签格式
-                    backgroundColor:"#ff7f50",//提示标签背景颜色
-                    textStyle:{color:"#fff"} //提示标签字体颜色
-                },
-                series: [{
-                    type: 'map',
-                    mapType: 'china',
-                    label: {
-                        normal: {
-                            show: true,//显示省份标签
-                            textStyle:{color:"#c71585"}//省份标签字体颜色
-                        },
-                        emphasis: {//对应的鼠标悬浮效果
-                            show: true,
-                            textStyle:{color:"#800080"}
-                        }
-                    },
-                    itemStyle: {
-                        normal: {
-                            borderWidth: .5,//区域边框宽度
-                            borderColor: '#009fe8',//区域边框颜色
-                            areaColor:"#ffefd5",//区域颜色
-                        },
-                        emphasis: {
-                            borderWidth: .5,
-                            borderColor: '#4b0082',
-                            areaColor:"#ffdead",
-                        }
-                    },
-                    data:[
-                        {name:'福建', selected:true}//福建为选中状态
-                    ]
-                }],
-            };
+ var data = [
+    {name: '常州', value: '杨桢栋'}
 
+];
+
+var geoCoordMap = {
+   '宜兴':[119.82,31.36],
+   '北海':[109.12,21.49],
+   '西安':[108.95,34.27],
+   '金坛':[119.56,31.74],
+   '东营':[118.49,37.46],
+   '牡丹江':[129.58,44.6],
+   '遵义':[106.9,27.7],
+   '绍兴':[120.58,30.01],
+   '扬州':[119.42,32.39],
+   '常州':[119.95,31.79]
+
+};
+
+function convertData(data) {
+   var res = [];
+   for (var i = 0; i < data.length; i++) {
+       var geoCoord = geoCoordMap[data[i].name];
+       if (geoCoord) {
+           res.push({
+               name: data[i].name,
+               value: geoCoord.concat(data[i].value)
+           });
+       }
+   }
+   return res;
+};
+
+
+
+
+option = {
+    tooltip: {},
+    visualMap: {
+        min: 0,
+        max: 20,
+        left: 'left',
+        top: 'bottom',
+        text: ['High','Low'],
+        seriesIndex: [1],
+        inRange: {
+            color: ['#e0ffff', '#006edd']
+        },
+        calculable : true
+    },
+    geo: {
+        map: 'china',
+        roam: true,
+        label: {
+            normal: {
+                show: true,
+                textStyle: {
+                    color: 'rgba(0,0,0,0.4)'
+                }
+            }
+        },
+        itemStyle: {
+            normal:{
+                borderColor: 'rgba(0, 0, 0, 0.2)'
+            },
+            emphasis:{
+                areaColor: null,
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                shadowBlur: 20,
+                borderWidth: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        }
+    },
+    series : [
+       {
+           type: 'scatter',
+           coordinateSystem: 'geo',
+           data: convertData(data),
+           symbolSize: 20,
+           symbol: 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z',
+           symbolRotate: 35,
+           label: {
+               normal: {
+                   formatter: '{b}',
+                   position: 'right',
+                   show: false
+               },
+               emphasis: {
+                   show: true
+               }
+           },
+           itemStyle: {
+               normal: {
+                    color: '#F06C00'
+               }
+           }
+        },
+        {
+            name: 'categoryA',
+            type: 'map',
+            geoIndex: 0,
+            // tooltip: {show: false},
+            data:[
+                {name: '北京', value: 0},
+                {name: '天津', value: 0},
+                {name: '上海', value: 0},
+                {name: '重庆', value: 0},
+                {name: '河北', value: 0},
+                {name: '河南', value: 0},
+                {name: '云南', value: 0},
+                {name: '辽宁', value: 0},
+                {name: '黑龙江', value: 0},
+                {name: '湖南', value: 0},
+                {name: '安徽', value: 0},
+                {name: '山东', value: 0},
+                {name: '新疆', value: 0},
+                {name: '江苏', value: 5},
+                {name: '浙江', value: 0},
+                {name: '江西', value: 0},
+                {name: '湖北', value: 0},
+                {name: '广西', value: 0},
+                {name: '甘肃', value: 0},
+                {name: '山西', value: 0},
+                {name: '内蒙古', value: 0},
+                {name: '陕西', value: 0},
+                {name: '吉林', value: 0},
+                {name: '福建', value: 0},
+                {name: '贵州', value: 0},
+                {name: '广东', value: 0},
+                {name: '青海', value: 0},
+                {name: '西藏', value: 0},
+                {name: '四川', value: 0},
+                {name: '宁夏', value: 0},
+                {name: '海南', value: 0},
+                {name: '台湾', value: 0},
+                {name: '香港', value: 0},
+                {name: '澳门', value: 0}
+            ]
+        }
+    ]
+};
             myChart.setOption(option);
             myChart.on('mouseover', function (params) {
                 var dataIndex = params.dataIndex;
