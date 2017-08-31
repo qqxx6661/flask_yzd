@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Contact Us</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Custom Theme files -->
+<link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+<link href="css/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="css/component.css" rel="stylesheet" type="text/css"  />
+<link href="css/font-awesome.css" rel="stylesheet"> 			<!-- font-awesome icons -->
+<!-- //Custom Theme files -->
+<!-- js -->
+<script src="js/jquery-1.11.1.min.js"></script> 
+<script src="js/modernizr.custom.js"></script>
+<!-- //js -->
+<!-- web fonts -->
+<link href="http://fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+<!-- //web fonts -->
+</head>
+<body class="cbp-spmenu-push">
+	<!-- banner -->
+	<div class="banner abt-bnr">
+		<!-- header -->		
+		<div class="w3ls-header">
+			<div class="container">	
+				<div class="agile-logo">
+					<h1><a href="index.html">Medi Plus</a></h1>
+				</div>
+				<div class="top-nav">
+					<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+						<h3>Menu</h3>
+						<a href="index.html">Home</a>
+						<a href="about.html">About us</a>
+						<a href="products.html">Products</a> 
+						<a href="#" class="menu-icon">Pages <i class="fa fa-sort-down"></i></a>
+							<ul class="nav1">
+								<li><a href="icons.html">Web Icons</a></li>
+								<li><a href="codes.html">Short Codes</a></li> 
+							</ul> 	 
+						<a href="contact.html" class="active">Contact Us</a>
+					</nav>  
+					<div class="main buttonset">	
+						<!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
+						<button id="showRightPush"><img src="images/menu-icon.png" alt=""/></button>
+						<!-- <span class="menu"></span> -->
+					</div>
+					<!-- script-for-drop down -->
+					<script>
+						$( "a.menu-icon" ).click(function() { 
+							$( "ul.nav1" ).slideToggle( 300, function() {
+								// Animation complete.
+							});
+						});
+					</script>
+					<!-- //script-for-dropdown -->  
+					<!-- Classie - class helper functions by @desandro https://github.com/desandro/classie -->
+					<script src="js/classie.js"></script>
+					<script>
+						var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+						showRightPush = document.getElementById( 'showRightPush' ),
+						body = document.body;
+
+						showRightPush.onclick = function() {
+							classie.toggle( this, 'active' );
+							classie.toggle( body, 'cbp-spmenu-push-toleft' );
+							classie.toggle( menuRight, 'cbp-spmenu-open' );
+							disableOther( 'showRightPush' );
+						};
+
+						function disableOther( button ) {
+							if( button !== 'showRightPush' ) {
+								classie.toggle( showRightPush, 'disabled' );
+							}
+						}
+					</script>
+					<!-- //script-for-menu -->
+				</div>	
+			</div>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+				<li class="breadcrumb-item active">Contact Us</li>
+			</ol>
+		</div>
+		<!-- //header -->  
+	</div>
+	<!-- //banner --> 
+	<!-- contact -->
+	<div class="contact">
+		<div class="container">				
+			<div class="contact-grids">
+				<div class="col-md-8 map">
+					<h3>How to find us</h3>
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158858.182370726!2d-0.10159865000000001!3d51.52864165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C+UK!5e0!3m2!1sen!2sin!4v1433744055746"></iframe>
+				</div>
+				<div class="col-md-4 address">
+					<h3>Contact info</h3>
+					<p class="cnt-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit,sheets containing Lorem Ipsum passages sed do </p>
+					<p>Eiusmod Tempor inc</p>
+					<p>9560 St Dolor,London</p>
+					<p>Telephone : +2 800 544 6035</p>
+					<p>FAX : +1 800 889 4444</p>
+					<p>Email : <a href="mailto:example@mail.com">mail@example.com</a></p>
+				</div>									
+				<div class="clearfix"> </div>	
+			</div>
+			<div class="contact-form">
+				<h3>Contact form</h3>
+				<form action="#" method="post">
+					<div class="col-md-6 col-sm-6 form-grids">
+						<input type="text" name="Name" placeholder="Name" required=""> 
+						<input type="email" name="Email" placeholder="Email" required="">
+						<input type="text" name="Telephone" placeholder="Telephone" required=""> 
+					</div>
+					<div class="col-md-6 col-sm-6 form-grids">
+						<textarea name="Message" placeholder="Message" required=""></textarea>
+						<button class="btn btn-1 btn-1d"> Submit </button>
+					</div>
+					<div class="clearfix"> </div>					
+				</form>
+			</div>
+		</div>		
+	</div>
+	<!--//contact-->
+	<!-- footer -->
+	<div class="footerw3-agile">
+		<div class="container">
+			<div class="footer-row">
+				<div class="col-md-4 footer-grids">
+					<h3>Navigation</h3>					
+					<ul>
+						<li><a href="about.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> About us</a></li>
+						<li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Products</a></li>
+						<li><a href="icons.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Web Icons</a></li>
+						<li><a href="codes.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Short Codes</a></li>
+						<li><a href="contact.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Contact Us</a></li>
+					</ul>
+				</div>
+				<div class="col-md-4 footer-grids">
+					<h3>Working Hours</h3>
+					<ul>
+						<li>Mon - Sat :  10am - 9pm</li>
+						<li>Sunday :  By Special Appointment</li> 
+						<li>Dignissimos at vero eos et accusamus et </li> 
+						<li>iusto odio ducimus qui accusamus et.</li> 
+					</ul>
+				</div>
+				<div class="col-md-4 footer-grids">
+					<h2><a href="index.html">Medi Plus</a></h2>
+					<p>Gnissimos voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi. atque corrupti quos dolores et quas molestias excepturi sint occaecat officia deserunt mollitia laborum et dolorum fuga</p>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<div class="footer-bottom">
+		<div class="container">
+			<div class="footer-left">
+				<p>Copyright &copy; 2017.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>		
+			</div>
+			<div class="footer-right">
+				<ul class="w3-agileitsicons">
+					<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+					<li><a class="twt" href="#"><i class="fa fa-twitter" aria-hidden="true"></i> </a></li>
+					<li><a class="drbl" href="#"><i class="fa fa-linkedin" aria-hidden="true"></i> </a></li>
+					<li><a class="be" href="#"><i class="fa fa-dribbble" aria-hidden="true"></i> </a></li>
+				</ul>
+			</div>
+			<script>$(function () {
+			  $('[data-toggle="tooltip"]').tooltip()
+			})</script>
+		</div>
+	</div>
+	<!-- //footer --> 
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/bootstrap.js"> </script>
+</body>
+</html>

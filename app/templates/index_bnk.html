@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h2>
+        电商价格监控系统
+    </h2>
+    <p>
+        目前支持京东商城，低于期望价格后会发送邮件提醒用户。
+    </p>
+    <h3>
+        监控系统状态：
+    </h3>
+    <p>
+        当前监控商品数：{{item_number}} 当前用户数：{{user_number}}
+    </p>
+    <p>
+        {% if not current_user.is_authenticated %}
+        <a class="btn btn-primary btn-large" href="{{ url_for('login') }}">进入监控</a>
+        {% else %}
+        <a class="btn btn-primary btn-large" href="{{ url_for('users', user_id = current_user.id) }}">进入监控</a>
+        {% endif %}
+    </p>
+</div>
+<div class="jumbotron">
+    <h2>
+        推特治国
+    </h2>
+    <p>
+        实时获取川普最新推特
+    </p>
+    <p>
+        <a class="btn btn-primary btn-large" href="{{ url_for('twitter') }}">查看推特</a>
+    </p>
+</div>
+<div class="row clearfix">
+    <div class="col-md-4 column">
+        <h2>
+
+        </h2>
+        <p>
+
+        </p>
+    </div>
+    <div class="col-md-4 column">
+        <h2>
+
+        </h2>
+        <p>
+
+        </p>
+    </div>
+    <div class="col-md-4 column">
+        <h2>
+
+        </h2>
+        <p>
+
+        </p>
+    </div>
+</div>
+<br><br><br>
+{% endblock %}

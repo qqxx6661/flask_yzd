@@ -1,62 +1,233 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="jumbotron">
-    <h2>
-        电商价格监控系统
-    </h2>
-    <p>
-        目前支持京东商城，低于期望价格后会发送邮件提醒用户。
-    </p>
-    <h3>
-        监控系统状态：
-    </h3>
-    <p>
-        当前监控商品数：{{item_number}} 当前用户数：{{user_number}}
-    </p>
-    <p>
-        {% if not current_user.is_authenticated %}
-        <a class="btn btn-primary btn-large" href="{{ url_for('login') }}">进入监控</a>
-        {% else %}
-        <a class="btn btn-primary btn-large" href="{{ url_for('users', user_id = current_user.id) }}">进入监控</a>
-        {% endif %}
-    </p>
-</div>
-<div class="jumbotron">
-    <h2>
-        推特治国
-    </h2>
-    <p>
-        实时获取川普最新推特
-    </p>
-    <p>
-        <a class="btn btn-primary btn-large" href="{{ url_for('twitter') }}">查看推特</a>
-    </p>
-</div>
-<div class="row clearfix">
-    <div class="col-md-4 column">
-        <h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Custom Theme files -->
+<link href="/static/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+<link href="/static/css/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/static/css/component.css" rel="stylesheet" type="text/css"  />
+<link href="/static/css/font-awesome.css" rel="stylesheet"> 			<!-- font-awesome icons -->
+<!-- //Custom Theme files -->
+<!-- js -->
+<script src="/static/js/jquery-1.11.1.min.js"></script>
+<script src="/static/js/modernizr.custom.js"></script>
+<!-- //js -->
+<!-- web fonts -->
+<link href="http://fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+<!-- //web fonts -->
+</head>
+<body class="cbp-spmenu-push">
+	<!-- banner -->
+	<div class="banner">
+		<!-- header -->		
+		<div class="w3ls-header">
+			<div class="container">	
+				<div class="agile-logo">
+					<h1><a href="index.html">Rude3Knife's Home</a></h1>
+				</div>
+				<div class="top-nav">
+					<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
+						<h3>Menu</h3>
+						<a href="index.html" class="active">首页</a>
+						{% if not current_user.is_authenticated %}
+						<a href="{{ url_for('login') }}">电商监控</a>
+						{% else %}
+						<a href="{{ url_for('users', user_id = current_user.id) }}">电商监控</a>
+						{% endif %}
+						<a href="#" class="menu-icon">其他功能<i class="fa fa-sort-down"></i></a>
+							<ul class="nav1">
+								<li><a href="{{ url_for('twitter') }}">推特治国</a></li>
+								<li><a href="{{ url_for('iot2012') }}">iot2012</a></li>
+							</ul>
+						<a href="{{ url_for('about_me') }}">关于我</a>
+						<a href="#">---------------</a>
+						{% if not current_user.is_authenticated %}
+                            <a href="{{ url_for('login') }}">登录</a>
+                            <a href="{{ url_for('sign_up') }}">注册</a>
+                        {% else %}
+							<a href="{{ url_for('users', user_id = current_user.id) }}">个人主页</a>
+							<a href="{{ url_for('logout') }}">登出</a>
+						{% endif %}
+					</nav>
+					<div class="main buttonset">
+						<!-- Class "cbp-spmenu-open" gets applied to menu and "cbp-spmenu-push-toleft" or "cbp-spmenu-push-toright" to the body -->
+						<button id="showRightPush"><img src="/static/images/menu-icon.png" alt=""/></button>
+						<!-- <span class="menu"></span> -->
+					</div>
+					<!-- script-for-drop down -->
+					<script>
+						$( "a.menu-icon" ).click(function() {
+							$( "ul.nav1" ).slideToggle( 300, function() {
+								// Animation complete.
+							});
+						});
+					</script>
+					<!-- //script-for-dropdown -->
+					<!-- Classie - class helper functions by @desandro https://github.com/desandro/classie -->
+					<script src="/static/js/classie.js"></script>
+					<script>
+						var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+						showRightPush = document.getElementById( 'showRightPush' ),
+						body = document.body;
 
-        </h2>
-        <p>
+						showRightPush.onclick = function() {
+							classie.toggle( this, 'active' );
+							classie.toggle( body, 'cbp-spmenu-push-toleft' );
+							classie.toggle( menuRight, 'cbp-spmenu-open' );
+							disableOther( 'showRightPush' );
+						};
 
-        </p>
-    </div>
-    <div class="col-md-4 column">
-        <h2>
+						function disableOther( button ) {
+							if( button !== 'showRightPush' ) {
+								classie.toggle( showRightPush, 'disabled' );
+							}
+						}
+					</script>
+					<!-- /script-for-menu -->
+				</div>
+			</div>
+		</div>
+		<!-- //header -->
+		<div class="banner-text">
+			<h3>蛮三刀把刀的个人主页</h3>
+			<p>你好~<br>京东价格监控，推特治国，请向下浏览</p>
+			<h5><i class="fa fa-github" aria-hidden="true"></i> <span><a target="_blank" href="https://github.com/qqxx6661">qqxx6661</a></span></h5>
+			<h5><i class="fa fa-envelope-o" aria-hidden="true"></i> <a class="email-link" href="mailto:qqxx6661@gmail.com">qqxx6661@gmail.com</a></h5>
 
-        </h2>
-        <p>
-
-        </p>
-    </div>
-    <div class="col-md-4 column">
-        <h2>
-
-        </h2>
-        <p>
-
-        </p>
-    </div>
-</div>
-<br><br><br>
-{% endblock %}
+		</div>
+	</div>
+	<!-- //banner -->
+	<div class="hmw3layouts">
+		<div class="container">
+			<div class="col-md-5 hmw3layouts-left">
+				<img src="/static/images/jd.png" alt="">
+			</div>
+			<div class="col-md-7 hmw3layouts-left w3right">
+				<h5>电商价格监控系统</h5>
+				<p>目前支持京东商城，低于期望价格后会发送邮件提醒用户。</p>
+				{% if not current_user.is_authenticated %}
+				<a class="btn btn-primary btn-large" href="{{ url_for('login') }}">进入监控</a>
+				{% else %}
+				<a class="btn btn-primary btn-large" href="{{ url_for('users', user_id = current_user.id) }}">进入监控</a>
+				{% endif %}
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<!-- slid -->
+	<div class="slid">
+		<div class="container">
+			<div class="col-md-3 col-sm-3 col-xs-6 slid_grid">
+				<div class="slid_text">
+					<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='{{user_number}}' data-delay='.5' data-increment="5">{{user_number}}</div>
+					<p>用户数</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-6 slid_grid slid_grid2">
+				<div class="slid_text">
+					<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='{{item_number}}' data-delay='.5' data-increment="5">{{item_number}}</div>
+					<p>监控商品</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-6 slid_grid slid_grid3">
+				<div class="slid_text">
+					<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='100' data-delay='.5' data-increment="1">100</div>
+					<p>访问量</p>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-6 slid_grid slid_grid4">
+				<div class="slid_text">
+					<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='2800' data-delay='.5' data-increment="10">0</div>
+					<p>待定</p>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<!-- //slid -->
+	<div class="hmw3layouts">
+		<div class="container">
+			<div class="col-md-5 hmw3layouts-left">
+				<img src="/static/images/trump.jpg" alt="">
+			</div>
+			<div class="col-md-7 hmw3layouts-left w3right">
+				<h5>推特治国</h5>
+				<p>实时获取川普最新推特</p>
+				<a class="btn btn-primary btn-large" href="{{ url_for('twitter') }}">查看推特</a>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<!-- footer -->
+	<div class="footerw3-agile">
+		<div class="container">
+			<div class="footer-row">
+				<div class="col-md-4 footer-grids">
+					<h3>Navigation</h3>
+					<ul>
+						<li><a href="about.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> About us</a></li>
+						<li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Products</a></li>
+						<li><a href="icons.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Web Icons</a></li>
+						<li><a href="codes.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Short Codes</a></li>
+						<li><a href="contact.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Contact Us</a></li>
+					</ul>
+				</div>
+				<div class="col-md-4 footer-grids">
+					<h3>Working Hours</h3>
+					<ul>
+						<li>Mon - Sat :  10am - 9pm</li>
+						<li>Sunday :  By Special Appointment</li>
+						<li>Dignissimos at vero eos et accusamus et </li>
+						<li>iusto odio ducimus qui accusamus et.</li>
+					</ul>
+				</div>
+				<div class="col-md-4 footer-grids">
+					<h2><a href="index.html">Rude3Knife's Home</a></h2>
+					<p>Gnissimos voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi. atque corrupti quos dolores et quas molestias excepturi sint occaecat officia deserunt mollitia laborum et dolorum fuga</p>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<div class="footer-bottom">
+		<div class="container">
+			<div class="footer-left">
+				<p>Copyright &copy; 2017. Rude3Knife's Home. All rights reserved.</p>
+			</div>
+			<div class="footer-right">
+				<ul class="w3-agileitsicons">
+					<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+					<li><a class="twt" href="#"><i class="fa fa-twitter" aria-hidden="true"></i> </a></li>
+					<li><a class="drbl" href="#"><i class="fa fa-linkedin" aria-hidden="true"></i> </a></li>
+					<li><a class="be" href="#"><i class="fa fa-github" aria-hidden="true"></i> </a></li>
+				</ul>
+			</div>
+			<script>$(function () {
+			  $('[data-toggle="tooltip"]').tooltip()
+			})</script>
+		</div>
+	</div>
+	<!-- //footer -->
+	<!-- start-smooth-scrolling --> 
+	<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+			
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+	</script>
+	<!-- //end-smooth-scrolling -->	
+	<script type="text/javascript" src="/static/js/numscroller-1.0.js"></script>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/bootstrap.js"> </script>
+</body>
+</html>
