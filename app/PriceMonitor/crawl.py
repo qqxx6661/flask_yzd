@@ -52,6 +52,7 @@ class Crawl(object):
                     print 'Catch name error'
                     name = '本轮抓取该商品名称失败，请等待重试'
                     return name
+        print 'name:', name
         return name  # 遇到return无需break了！
 
     def get_name_tb(self, item_id_inner, proxy_inner):
