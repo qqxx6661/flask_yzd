@@ -142,7 +142,7 @@
 			</div>
 			<div class="col-md-3 col-sm-3 col-xs-6 slid_grid slid_grid4">
 				<div class="slid_text">
-					<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='2800' data-delay='.5' data-increment="10">0</div>
+					<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='0' data-delay='.5' data-increment="10">0</div>
 					<p>待定</p>
 				</div>
 			</div>
@@ -168,27 +168,24 @@
 		<div class="container">
 			<div class="footer-row">
 				<div class="col-md-4 footer-grids">
-					<h3>Navigation</h3>
+					<h3>网站导航</h3>
 					<ul>
-						<li><a href="about.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> About us</a></li>
-						<li><a href="products.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Products</a></li>
-						<li><a href="icons.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Web Icons</a></li>
-						<li><a href="codes.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Short Codes</a></li>
-						<li><a href="contact.html"><i class="fa fa-arrow-right" aria-hidden="true"></i> Contact Us</a></li>
+						<li><a href="{{ url_for('about_me') }}"><i class="fa fa-arrow-right" aria-hidden="true"></i>关于我</a></li>
+						<li><a href="{{ url_for('twitter') }}"><i class="fa fa-arrow-right" aria-hidden="true"></i>推特治国</a></li>
 					</ul>
 				</div>
 				<div class="col-md-4 footer-grids">
-					<h3>Working Hours</h3>
+					<h3>我的标签</h3>
 					<ul>
-						<li>Mon - Sat :  10am - 9pm</li>
-						<li>Sunday :  By Special Appointment</li>
-						<li>Dignissimos at vero eos et accusamus et </li>
-						<li>iusto odio ducimus qui accusamus et.</li>
+						<li># 学生</li>
+						<li># 游戏</li>
+						<li># 码农</li>
+						<li># 摄影</li>
 					</ul>
 				</div>
 				<div class="col-md-4 footer-grids">
-					<h2><a href="index.html">Rude3Knife's Home</a></h2>
-					<p>Gnissimos voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi. atque corrupti quos dolores et quas molestias excepturi sint occaecat officia deserunt mollitia laborum et dolorum fuga</p>
+					<h3>关于网站</h3>
+					<p>本网站基于Flask，依赖各种Flask拓展，作为学习Flask之用，不定期开发维护。</p>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
@@ -200,12 +197,7 @@
 				<p>Copyright &copy; 2017. Rude3Knife's Home. All rights reserved.</p>
 			</div>
 			<div class="footer-right">
-				<ul class="w3-agileitsicons">
-					<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-					<li><a class="twt" href="#"><i class="fa fa-twitter" aria-hidden="true"></i> </a></li>
-					<li><a class="drbl" href="#"><i class="fa fa-linkedin" aria-hidden="true"></i> </a></li>
-					<li><a class="be" href="#"><i class="fa fa-github" aria-hidden="true"></i> </a></li>
-				</ul>
+				<div class="social-share" data-sites="weibo,qq,qzone,tencent,wechat,facebook,twitter"></div>
 			</div>
 			<script>$(function () {
 			  $('[data-toggle="tooltip"]').tooltip()
@@ -229,5 +221,17 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/static/js/bootstrap.js"> </script>
+
+	<!-- 分享小插件 -->
+	<link rel="stylesheet" href="/static/dist-share/css/share.min.css">
+	<script src="/static/bootstrap/jquery.js"></script>
+	<script src="/static/dist-share/js/jquery.share.min.js"></script>
+	<script>
+	$('#share-1').share();
+	$('#share-2').share({sites: ['qzone', 'qq', 'weibo','wechat']});
+	$('#share-3').share();
+	$('#share-4').share();
+	</script>
+
 </body>
 </html>
