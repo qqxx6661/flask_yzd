@@ -158,14 +158,40 @@ class ItemQuery(object):
         cursor.close()
 
     def use_proxy(self):
+        # 旧版本
+        # while(1):
+        #     url = 'http://localhost:8000/&type=3'
+        #     try:
+        #         r = requests.get(url, timeout=5)
+        #         js = json.loads(r.text)
+        #         proxies_inner = {
+        #             'http': 'http://' + js[0],
+        #             'https': 'https://' + js[0],
+        #         }
+        #     except IndexError:
+        #         print 'No usable proxy now, retrying'
+        #         time.sleep(5)
+        #         continue
+        #     except requests.exceptions.ConnectionError:
+        #         print 'No proxy now, retrying'
+        #         time.sleep(5)
+        #         continue
+        #     except requests.exceptions.ReadTimeout:
+        #         print 'No proxy now, retrying'
+        #         time.sleep(5)
+        #         continue
+        #     return proxies_inner
+
+        # 新版本redis
         while(1):
-            url = 'http://localhost:8000/&type=3'
             try:
-                r = requests.get(url, timeout=5)
-                js = json.loads(r.text)
+                r = redis.Redis(host="115.159.190.214", port=6379, db=0)
+                good_proxies = r.srandmember("good_proxies", 1)  # 随机获取一个
+                good_proxies = good_proxies[0].decode("utf-8")  # 获取的byte转为str
+                print 'Using proxy:', good_proxies
                 proxies_inner = {
-                    'http': 'http://' + js[0],
-                    'https': 'https://' + js[0],
+                    'http': 'http://' + good_proxies[0],
+                    'https': 'https://' + good_proxies[0],
                 }
             except IndexError:
                 print 'No usable proxy now, retrying'
@@ -180,6 +206,8 @@ class ItemQuery(object):
                 time.sleep(5)
                 continue
             return proxies_inner
+
+
 
     def start_monitor(self, break_time):
         while (1):
