@@ -11,7 +11,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 from os import path
 import os
-
+import redis
 
 class ItemQuery(object):
     local_dir = path.dirname(__file__)
@@ -190,8 +190,8 @@ class ItemQuery(object):
                 good_proxies = good_proxies[0].decode("utf-8")  # 获取的byte转为str
                 print 'Using proxy:', good_proxies
                 proxies_inner = {
-                    'http': 'http://' + good_proxies[0],
-                    'https': 'https://' + good_proxies[0],
+                    'http': 'http://' + good_proxies,
+                    'https': 'https://' + good_proxies,
                 }
             except IndexError:
                 print 'No usable proxy now, retrying'
