@@ -185,7 +185,7 @@ class ItemQuery(object):
         # 新版本redis
         while(1):
             try:
-                r = redis.Redis(host="115.159.190.214", port=6379, db=0)
+                r = redis.Redis(host="115.159.190.214", port=6379, db=0, password='redis')
                 good_proxies = r.srandmember("good_proxies", 1)  # 随机获取一个
                 good_proxies = good_proxies[0].decode("utf-8")  # 获取的byte转为str
                 print 'Using proxy:', good_proxies
