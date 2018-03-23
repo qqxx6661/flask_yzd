@@ -17,10 +17,15 @@ Jinja2==2.9.6
 lxml==3.8.0
 MarkupSafe==1.0
 meld3==1.0.2
+oauthlib==2.0.2
+redis==2.10.6
 requests==2.18.1
+requests-oauthlib==0.8.0
+six==1.10.0
+SQLAlchemy==1.1.11
 supervisor==3.3.2
+tweepy==3.5.0
 urllib3==1.21.1
 uWSGI==2.0.15
 Werkzeug==0.12.2
 WTForms==2.1
-tweepy==3.5.0
