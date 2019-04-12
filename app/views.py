@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import datetime
-from string import strip
+# from string import strip
 from app import app, db, lm
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import User, Monitor, ROLE_USER
-from forms import LoginForm, SignUpForm, AboutMeForm, AddMonitorItemForm
-from PriceMonitor import additemcrawl
+from .models import User, Monitor, ROLE_USER
+from .forms import LoginForm, SignUpForm, AboutMeForm, AddMonitorItemForm
+from .PriceMonitor import additemcrawl
 import tweepy
 
 @app.route('/')
@@ -153,15 +153,15 @@ def addmonitoritem(user_id):
     item = Monitor()
     if form.validate_on_submit():
         item_id = request.form.get("item_id")
-        if not len(strip(item_id)):
+        if not len(item_id.strip()):
             flash("商品ID为必填项")
             return redirect(url_for("addmonitoritem", user_id=user_id))
         user_price = request.form.get("user_price")
-        if not len(strip(user_price)):
+        if not len(user_price.strip()):
             flash("The content is necessray!")
             return redirect(url_for("addmonitoritem", user_id=user_id))
         mall_id = request.form.get("mall_id")
-        if not len(strip(item_id)):
+        if not len(item_id.strip()):
             flash("The content is necessray!")
             return redirect(url_for("addmonitoritem", user_id=user_id))
         item.item_id = item_id

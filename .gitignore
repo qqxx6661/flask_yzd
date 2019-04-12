@@ -2,7 +2,7 @@
 Thumbs.db
 ehthumbs.db
 Desktop.ini
-*.db
+#*.db
 
 # Python:
 *.py[cod]
@@ -12,7 +12,8 @@ Desktop.ini
 build
 
 # My configurations:
-app.db
+#app.db
 mailbox.txt
-.idea/workspace.xml
+.idea/
+venv/
 
